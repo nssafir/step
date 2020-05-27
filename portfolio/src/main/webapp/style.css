@@ -1,18 +1,20 @@
-body { font-family: Verdana, Courier, Mono; max-width: 1024px; padding-left: 2ch; padding-right: 2ch; margin: 0 auto; }
-
-nav { text-align: center; }
-
-nav ul { list-style-type: none; margin: 0; padding: 0; }
-
-nav li { padding: 2px; display: inline; }
-
-#content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 650px;
-  text-align:center;
+body { 
+    font-family: Verdana, Courier; 
+    padding-left: 2ch; 
+    padding-right: 2ch; 
+    padding-top: 1ch;
+    margin: auto;
+    text-align:center;
 }
 
-#greeting-container {
-  margin-top: 20px;
+nav { 
 }
+
+nav ul {
+}
+
+nav li { 
+    display: inline; 
+    padding: 3px;
+}
+
