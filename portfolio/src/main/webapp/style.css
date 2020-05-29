@@ -7,6 +7,10 @@ body {
     text-align:center;
 }
 
+#content {
+    text-align: left;
+}
+
 nav li { 
     display: inline; 
     padding: 3px;
