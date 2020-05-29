@@ -1,9 +1,17 @@
-#content {
-  margin-left: auto;
-  margin-right: auto;
-  width: 650px;
+body { 
+    font-family: Verdana, Courier; 
+    padding-left: 2ch; 
+    padding-right: 2ch; 
+    padding-top: 1ch;
+    margin: auto;
+    text-align:center;
 }
 
-#greeting-container {
-  margin-top: 20px;
+nav li { 
+    display: inline; 
+    padding: 3px;
+}
+
+a {
+    color: firebrick;
 }
