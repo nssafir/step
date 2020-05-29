@@ -6,6 +6,7 @@ body {
     margin: auto;
     text-align:center;
 }
+
 #content {
     text-align: left;
 }
@@ -13,4 +14,8 @@ body {
 nav li { 
     display: inline; 
     padding: 3px;
+}
+
+a {
+    color: firebrick;
 }
