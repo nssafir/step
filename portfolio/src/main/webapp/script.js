@@ -13,18 +13,14 @@
 // limitations under the License.
 
 /**
- * Adds a random fact to the page.
+ * Changes style to be easier to read for individuals with visual impairments
+ * (i.e. larger text, sans serif font, green link color)
  */
-function addRandomFact() {
-  const facts =
-      ['I lived in the Netherlands during my senior year of high school',
-       'I am currently living in Kansas City',
-        'I help coach a youth hockey team in Athens, Georgia'];
-
-  // Pick a random fact.
-  const fact = facts[Math.floor(Math.random() * facts.length)];
-
-  // Add it to the page.
-  const factContainer = document.getElementById('fact-container');
-  factContainer.innerText = fact;
+function changeSettings() {
+    document.body.style.fontSize = "xx-large";
+    document.body.style.fontFamily = "Comic Sans MS,cursive,sans-serif";
+    var links = document.links;
+    for (var i = 0; i <links.length; i++) {
+        links[i].style.color = "green";
+    }
 }

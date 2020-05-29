@@ -7,14 +7,11 @@ body {
     text-align:center;
 }
 
-nav { 
-}
-
-nav ul {
-}
-
 nav li { 
     display: inline; 
     padding: 3px;
 }
 
+a {
+    color: firebrick;
+}
