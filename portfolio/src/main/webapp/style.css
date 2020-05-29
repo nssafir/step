@@ -14,4 +14,13 @@ body {
 nav li { 
     display: inline; 
     padding: 3px;
+}
+
+a {
+    color: firebrick;
+}
+
+nav li { 
+    display: inline; 
+    padding: 3px;
 } 

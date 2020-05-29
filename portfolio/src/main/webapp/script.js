@@ -13,16 +13,14 @@
 // limitations under the License.
 
 /**
- * Adds a random greeting to the page.
+ * Changes style to be easier to read for individuals with visual impairments
+ * (i.e. larger text, sans serif font, green link color)
  */
-function addRandomGreeting() {
-  const greetings =
-      ['Hello world!', '¡Hola Mundo!', '你好，世界！', 'Bonjour le monde!'];
-
-  // Pick a random greeting.
-  const greeting = greetings[Math.floor(Math.random() * greetings.length)];
-
-  // Add it to the page.
-  const greetingContainer = document.getElementById('greeting-container');
-  greetingContainer.innerText = greeting;
+function changeSettings() {
+    document.body.style.fontSize = "xx-large";
+    document.body.style.fontFamily = "Comic Sans MS,cursive,sans-serif";
+    var links = document.links;
+    for (var i = 0; i <links.length; i++) {
+        links[i].style.color = "green";
+    }
 }
