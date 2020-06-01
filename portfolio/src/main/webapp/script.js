@@ -27,38 +27,27 @@ function changeSettings() {
 
 
 /**
- * Fetches "Hello Nathan!" from the server and adds it to the DOM.
+ * Fetches comment from the server and adds it to the DOM.
  */
-function getName() {
-  console.log('Fetching name.');
-
-  // The fetch() function returns a Promise because the request is asynchronous.
+function getComment() {
+  console.log('Fetching comment.');
   const responsePromise = fetch('/data');
-
-  // When the request is complete, pass the response into handleResponse().
   responsePromise.then(handleResponse);
 }
 
 /**
  * Handles response by converting it to text and passing the result to
- * addNameToDom().
+ * addCommentToDom().
  */
 function handleResponse(response) {
   console.log('Handling the response.');
-
-  // response.text() returns a Promise, because the response is a stream of
-  // content and not a simple variable.
   const textPromise = response.text();
-
-  // When the response is converted to text, pass the result into the
-  // addQuoteToDom() function.
-  textPromise.then(addNameToDom);
+  textPromise.then(addCommentToDom);
 }
 
-/** Adds name to the DOM. */
-function addNameToDom(name) {
-  console.log('Adding name to dom: ' + name);
-
-  const nameContainer = document.getElementById('name-container');
-  nameContainer.innerText = name;
+/** Adds comment to the DOM. */
+function addCommentToDom(comment) {
+  console.log('Adding comment to dom: ' + comment);
+  const commentContainer = document.getElementById('comment-container');
+  commentContainer.innerText = comment;
 }
