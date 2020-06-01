@@ -19,3 +19,8 @@ nav li {
 a {
     color: firebrick;
 }
+
+nav li { 
+    display: inline; 
+    padding: 3px;
+} 
