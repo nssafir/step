@@ -1,7 +1,6 @@
 body { 
     font-family: Verdana, Courier; 
-    padding-left: 2ch; 
-    padding-right: 2ch; 
+    padding: 2ch;
     padding-top: 1ch;
     margin: auto;
     text-align:center;
@@ -11,9 +10,17 @@ body {
     text-align: left;
 }
 
+nav {
+    text-align: center;
+}
+
+nav ul {
+    list-style-type: none;
+    margin: 0;
+}
+
 nav li { 
     display: inline; 
-    padding: 3px;
 }
 
 a {
