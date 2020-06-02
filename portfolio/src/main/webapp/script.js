@@ -25,7 +25,6 @@ function changeSettings() {
     }
 }
 
-
 /**
  * Fetches comment from the server and adds it to the DOM.
  */
@@ -50,4 +49,23 @@ function addCommentToDom(comment) {
   console.log('Adding comment to dom: ' + comment);
   const commentContainer = document.getElementById('comment-container');
   commentContainer.innerText = comment;
+}
+
+/** Adds all comments to list */
+function getAllComments() {
+  fetch('/data').then(response => response.json()).then((data) => {
+    console.log("getAllComments()");
+    const commentList = document.getElementById('commentList');
+    data.forEach((comment) => {
+      commentList.appendChild(createListElement(comment))
+    });
+  });
+}
+
+/** Creates an <li> element containing text. */
+function createListElement(text) {
+  console.log("createListElement(" + text + ")");
+  const liElement = document.createElement('li');
+  liElement.innerText = text;
+  return liElement;
 }

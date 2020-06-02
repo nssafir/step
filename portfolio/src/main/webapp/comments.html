@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js"></script>
+  </head>
+  <body onload="getAllComments()">    
+    <strong>Nathan Safir</strong>
+    <br />
+    <div class = "list">
+      <div class = "entry"><a href="index.html">Home</a></div>
+      <div class = "entry"><a href="about.html">About</a></div>
+      <div class = "entry"><a href="projects.html">Projects</a></div>
+      <div class = "entry"><a href="comments.html">Comments</a></div>
+    </div>
+    <br />
+    <form action="/data" method="POST"> 
+      <p>Your Comment:</p>
+      <textarea name="text-input">*write comment*</textarea>
+      <input type="submit" />
+    </form>
+    <br />
+    <p>Comments:</p>
+    <ul id="commentList"></ul>
+  </body>
+</html>
