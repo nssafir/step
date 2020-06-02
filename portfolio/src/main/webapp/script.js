@@ -24,3 +24,30 @@ function changeSettings() {
         links[i].style.color = "green";
     }
 }
+
+
+/**
+ * Fetches comment from the server and adds it to the DOM.
+ */
+function getComment() {
+  console.log('Fetching comment.');
+  const responsePromise = fetch('/data');
+  responsePromise.then(handleResponse);
+}
+
+/**
+ * Handles response by converting it to text and passing the result to
+ * addCommentToDom().
+ */
+function handleResponse(response) {
+  console.log('Handling the response.');
+  const textPromise = response.text();
+  textPromise.then(addCommentToDom);
+}
+
+/** Adds comment to the DOM. */
+function addCommentToDom(comment) {
+  console.log('Adding comment to dom: ' + comment);
+  const commentContainer = document.getElementById('comment-container');
+  commentContainer.innerText = comment;
+}
