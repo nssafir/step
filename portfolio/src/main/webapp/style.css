@@ -1,28 +1,21 @@
 body { 
-    font-family: Verdana, Courier; 
-    padding: 2ch;
-    padding-top: 1ch;
-    margin: auto;
-    text-align:center;
+  font-family: Verdana, Courier; 
+  padding-left: 2ch; 
+  padding-right: 2ch; 
+  padding-top: 1ch;
+  margin: auto;
+  text-align:center;
 }
 
 #content {
-    text-align: left;
-}
-
-nav {
-    text-align: center;
-}
-
-nav ul {
-    list-style-type: none;
-    margin: 0;
-}
-
-nav li { 
-    display: inline; 
+  text-align: left;
 }
 
 a {
-    color: firebrick;
+  color: firebrick;
+}
+
+.entry { 
+  display: inline; 
+  padding: 3px;
 }
