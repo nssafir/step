@@ -29,7 +29,7 @@ import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import java.util.List;
 
-/** Servlet that handles comments data */
+/** Servlet that handles comments data. */
 @WebServlet("/data")
 public class DataServlet extends HttpServlet {
 
@@ -59,7 +59,7 @@ public class DataServlet extends HttpServlet {
     response.sendRedirect("comments.html");
   }
 
-  /** Stores comment as an entity */
+  /** Stores comment as an entity. */
   private void storeData(String comment) {
     String title = comment;
     long timestamp = System.currentTimeMillis();
