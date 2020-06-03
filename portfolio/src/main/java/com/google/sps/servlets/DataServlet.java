@@ -41,9 +41,24 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
+    // Convert the input into an int.
+    String numString = request.getParameter("player-choice");
+    System.out.println(numString);
+    int num = 3; // 3 is the default value.
+    try {
+      num = Integer.parseInt(numString);
+    } catch (NumberFormatException e) {
+      System.err.println("Could not convert to int: " + numString);
+    }
+
     List<String> comments = new ArrayList<>();
+    int counter = 0;
     for (Entity entity : results.asIterable()) {
+      if (counter >= num) {
+          break;
+      }
       comments.add((String) entity.getProperty("title"));
+      counter++;
     }
 
     Gson gson = new Gson();
@@ -59,7 +74,7 @@ public class DataServlet extends HttpServlet {
     storeData(comment);
     response.sendRedirect("comments.html");
   }
-
+ 
   /** Stores comment as an entity. */
   private void storeData(String comment) {
     String title = comment;
