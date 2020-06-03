@@ -42,19 +42,19 @@ public class DataServlet extends HttpServlet {
     PreparedQuery results = datastore.prepare(query);
 
     // Convert the input into an int.
-    String numString = request.getParameter("player-choice");
-    System.out.println(numString);
-    int num = 3; // 3 is the default value.
+    String maxCommentsString = request.getParameter("max-comments");
+    System.out.println("maxCommentsString is " + maxCommentsString); //test
+    int maxComments = 3; // 3 is the default value.
     try {
-      num = Integer.parseInt(numString);
+      maxComments = Integer.parseInt(maxCommentsString);
     } catch (NumberFormatException e) {
-      System.err.println("Could not convert to int: " + numString);
+      System.err.println("Could not convert to int: " + maxCommentsString);
     }
 
     List<String> comments = new ArrayList<>();
     int counter = 0;
     for (Entity entity : results.asIterable()) {
-      if (counter >= num) {
+      if (counter >= maxComments) {
           break;
       }
       comments.add((String) entity.getProperty("title"));

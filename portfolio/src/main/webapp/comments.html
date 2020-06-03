@@ -16,9 +16,16 @@
     </div>
     <br />
     <form action="/data" method="POST"> 
-      <p>Your Comment:</p>
+      <label for="text-input">Your comment:</label>
       <textarea name="text-input">*write comment*</textarea>
-      <textarea name="player-choice">*max comments*</textarea>
+      <label for="max-comments">Max # of Comments (between 1 and 5):</label>
+      <select id="max-comments" name="max-comments" onchange="getAllComments()">
+          <option value="1">1</option>
+          <option value="2">2</option>
+          <option value="3">3</option>
+          <option value="4">4</option>
+          <option value="5">5</option>
+      </select>
       <input type="submit" />
     </form>
     <br />
