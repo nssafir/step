@@ -43,7 +43,6 @@ public class DataServlet extends HttpServlet {
 
     // Convert the input into an int.
     String maxCommentsString = request.getParameter("max-comments");
-    System.out.println("maxCommentsString is " + maxCommentsString); //test
     int maxComments = 3; // 3 is the default value.
     try {
       maxComments = Integer.parseInt(maxCommentsString);
