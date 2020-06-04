@@ -15,24 +15,71 @@
       <div class = "entry"><a href="comments.html">Comments</a></div>
     </div>
     <br />
+    <div class = "comments-box">
     <form action="/data" method="POST"> 
-      <label for="text-input">Your comment:</label>
-      <textarea name="text-input">*write comment*</textarea>
-      <label for="max-comments">Max # of Comments (between 1 and 5):</label>
-      <select id="max-comments" name="max-comments" onchange="getAllComments()">
+      <ul>
+        <li>
+          <label for ="name-input">Name:</label>
+          <textarea id = "name-input" name="name-input"></textarea>
+        </li>
+        <li>
+          <label for="text-input">Comment:</label>
+          <textarea id = "text-input" name="text-input"></textarea>
+        </li>
+        <li>
+          <input type="submit" />
+        </li>
+        <li>
+          <!--
+          <div class="list">
+            <div class="entry">
+              <label for="max-comments">Display # Comments:</label>
+              <select id="max-comments" name="max-comments" onchange="getAllComments()">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+              </select>
+            </div>  
+            <div class="entry">
+              <label for="order">Display Order:</label>
+              <select id="order" name="order" onchange="getAllComments()">
+                <option value="0">Newest First</option>
+                <option value="1">Oldest First</option>
+              </select>
+            </div>
+            -->
+          </ul>
+        </li>      
+      </ul>
+    </form>
+    </div>
+    <p>Comments:</p>
+    <ul id="commentList"></ul>
+    <br />
+    <div class="list">
+      <div class="entry">
+        <label for="max-comments"># Comments:</label>
+        <select id="max-comments" name="max-comments" onchange="getAllComments()">
           <option value="1">1</option>
           <option value="2">2</option>
           <option value="3">3</option>
           <option value="4">4</option>
           <option value="5">5</option>
-      </select>
-      <input type="submit" />
-    </form>
+        </select>
+      </div>  
+      <div class="entry">
+        <label for="order">Order:</label>
+        <select id="order" name="order" onchange="getAllComments()">
+          <option value="0">Newest First</option>
+          <option value="1">Oldest First</option>
+        </select>
+      </div>
+    </div> 
     <br />
-    <form action ="/delete-data" method="POST">
-      <button onclick="deleteAllComments()">Delete All Comments</button>
-    </form>
-    <p>Comments:</p>
-    <ul id="commentList"></ul>
+      <form action ="/delete-data" method="POST">
+        <button onclick="deleteAllComments()">Delete All Comments</button>
+      </form> 
   </body>
 </html>
