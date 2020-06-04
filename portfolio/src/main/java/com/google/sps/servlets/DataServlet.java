@@ -41,9 +41,9 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
-    //  Convert the input into an int.
+    // Convert the input into an int.
     String maxCommentsString = request.getParameter("max-comments");
-    int maxComments = 3; // 3 is the default value.
+    int maxComments = 3;  // 3 is the default value.
     try {
       maxComments = Integer.parseInt(maxCommentsString);
     } catch (NumberFormatException e) {
