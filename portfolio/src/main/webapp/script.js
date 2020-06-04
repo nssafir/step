@@ -59,8 +59,9 @@ function getAllComments() {
   }
 
   // Load in specified amount of new comments.
-  const maxComments = document.getElementById("max-comments").value; 
-  fetch('/data?max-comments=' + maxComments).then(response => response.json()).then((data) => {
+  const maxComments = document.getElementById("max-comments").value;
+  const order = document.getElementById("order").value;
+  fetch('/data?max-comments=' + maxComments + "&order=" + order).then(response => response.json()).then((data) => {
     console.log("getAllComments()");
     const commentList = document.getElementById('commentList');
     data.forEach((comment) => {

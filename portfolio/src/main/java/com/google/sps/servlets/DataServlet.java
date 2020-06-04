@@ -37,7 +37,18 @@ public class DataServlet extends HttpServlet {
 
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    // Get comments in specified order.
+    int orderNum = 0;
+    String orderString = request.getParameter("order");
+    try {
+        orderNum = Integer.parseInt(orderString);
+    } catch (NumberFormatException e) {
+        System.err.println("Could not convert to int: " + orderString);
+    }
     Query query = new Query("Task").addSort("timestamp", SortDirection.DESCENDING);
+    if (orderNum == 1) {
+        query = new Query("Task").addSort("timestamp", SortDirection.ASCENDING);
+    }
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
 
