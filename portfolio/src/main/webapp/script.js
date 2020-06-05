@@ -53,7 +53,15 @@ function addCommentToDom(comment) {
 
 /** Adds all comments to list */
 function getAllComments() {
-  fetch('/data').then(response => response.json()).then((data) => {
+  // Clear previous list of comments.
+  while(commentList.firstChild) {
+    commentList.removeChild(commentList.firstChild);
+  }
+
+  // Load in specified amount of new comments.
+  const maxComments = document.getElementById("max-comments").value;
+  const order = document.getElementById("order").value;
+  fetch('/data?max-comments=' + maxComments + "&order=" + order).then(response => response.json()).then((data) => {
     console.log("getAllComments()");
     const commentList = document.getElementById('commentList');
     data.forEach((comment) => {
