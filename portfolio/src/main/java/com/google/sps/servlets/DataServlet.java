@@ -28,6 +28,7 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import java.util.List;
+import java.util.Iterator;
 
 /** Servlet that handles comments data. */
 @WebServlet("/data")
@@ -54,7 +55,7 @@ public class DataServlet extends HttpServlet {
 
     // Convert the input into an int.
     String maxCommentsString = request.getParameter("max-comments");
-    int maxComments = 3; // 3 is the default value.
+    int maxComments = 3;  // 3 is the default value.
     try {
       maxComments = Integer.parseInt(maxCommentsString);
     } catch (NumberFormatException e) {
@@ -62,18 +63,19 @@ public class DataServlet extends HttpServlet {
     }
 
     List<String> comments = new ArrayList<>();
-    int counter = 0;
     String fullComment;
-    for (Entity entity : results.asIterable()) {
-      if (counter >= maxComments) {
-        break;
+    Iterator<Entity> resultsIterator = results.asIterator();
+    Entity entity;
+    for (int i = 0; i < maxComments; i++) { 
+      if (!resultsIterator.hasNext()){ 
+        break; 
       }
+      entity = resultsIterator.next();
       fullComment = ((String) entity.getProperty("title"));
       if (entity.getProperty("name") != "") {
         fullComment += " - " + ((String) entity.getProperty("name"));
       }
-      comments.add(fullComment);
-      counter++;
+      comments.add(fullComment); 
     }
 
     Gson gson = new Gson();
@@ -104,5 +106,4 @@ public class DataServlet extends HttpServlet {
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     datastore.put(taskEntity);
   }
-
 }

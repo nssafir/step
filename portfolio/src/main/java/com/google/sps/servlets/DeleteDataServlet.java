@@ -21,7 +21,6 @@ public class DeleteDataServlet extends HttpServlet {
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    System.out.println("In /delete-data servlet"); //test
     Query query = new Query("Task");
     DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
     PreparedQuery results = datastore.prepare(query);
@@ -32,5 +31,4 @@ public class DeleteDataServlet extends HttpServlet {
     }
     response.sendRedirect("/comments.html");
   }
-
 }
