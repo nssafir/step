@@ -53,10 +53,11 @@ public class DataServlet extends HttpServlet {
 
     List<String> comments = new ArrayList<>();
     Iterator<Entity> resultsIterator = results.asIterator();
-    for (int i = 0; i < maxComments; i++) {
-      if (resultsIterator.hasNext()){
-          comments.add((String) resultsIterator.next().getProperty("title"));
-      }   
+    for (int i = 0; i < maxComments; i++) { 
+      if (!resultsIterator.hasNext()){ 
+        break; 
+      } 
+      comments.add((String) resultsIterator.next().getProperty("title")); 
     }
 
     Gson gson = new Gson();
