@@ -28,6 +28,7 @@ import com.google.appengine.api.datastore.PreparedQuery;
 import com.google.appengine.api.datastore.Query;
 import com.google.appengine.api.datastore.Query.SortDirection;
 import java.util.List;
+import java.util.Iterator;
 
 /** Servlet that handles comments data. */
 @WebServlet("/data")
@@ -51,13 +52,11 @@ public class DataServlet extends HttpServlet {
     }
 
     List<String> comments = new ArrayList<>();
-    int counter = 0;
-    for (Entity entity : results.asIterable()) {
-      if (counter >= maxComments) {
-          break;
-      }
-      comments.add((String) entity.getProperty("title"));
-      counter++;
+    Iterator<Entity> resultsIterator = results.asIterator();
+    for (int i = 0; i < maxComments; i++) {
+      if (resultsIterator.hasNext()){
+          comments.add((String) resultsIterator.next().getProperty("title"));
+      }   
     }
 
     Gson gson = new Gson();
