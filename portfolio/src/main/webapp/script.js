@@ -80,11 +80,16 @@ function createListElement(text) {
 
 /** Places I have lived. */
 var placesLived = [
-  ['Evanston', 42.0451, -87.6877, 4],
-  ['Overland Park', 38.9822, -94.6708, 5],
-  ['Wassenaar', 52.1429, 4.4012, 3],
-  ['Athens', 33.9519, -83.3576, 2],
-  ['Oxford', 51.7520, -1.2577, 1]
+  ['Evanston', 42.0451, -87.6877, 
+    '<h1>Evanston: 2000-2002</h1>'+'<p>I was born in outside Chicago at Northwestern Medical Center.</p>'],
+  ['Overland Park', 38.9822, -94.6708, 
+    '<h1>Overland Park: 2002-2017</h1>'+'<p>I was born in outside Chicago at Northwestern Medical Center.</p>'],
+  ['Wassenaar', 52.1429, 4.4012,
+    '<h1>Wassenaar: 2017-2018</h1>'+'<p>I was born in outside Chicago at Northwestern Medical Center.</p>'],
+  ['Athens', 33.9519, -83.3576,
+    '<h1>Athens: 2018-Present</h1>'+'<p>I was born in outside Chicago at Northwestern Medical Center.</p>'],
+  ['Oxford', 51.7520, -1.2577,
+    '<h1>Oxford: May-June 2019</h1>'+'<p>I was born in outside Chicago at Northwestern Medical Center.</p>']
 ];
 
 var placesVisited = [
@@ -125,15 +130,49 @@ function createMap() {
   // creates map and adds it to page
   const map = new google.maps.Map(
     document.getElementById('map'),
-    {center: {lat: 37.422, lng: -122.084}, zoom: 16});
+    {center: {lat: 37.601187, lng: -40.705303}, zoom: 3});
   
   // adds markers to the map
+  var livedIcon = {
+    url: "/images/livedPin.svg",
+    scaledSize: new google.maps.Size(20, 32),
+    origin: new google.maps.Point(0, 0),
+    anchor: new google.maps.Point(10, 32)};
+
+  
+
   for (var i = 0; i < placesLived.length; i++) {
     var place = placesLived[i];
+    /*
+    var infoWindow = new google.maps.InfoWindow({
+      content: place[3]
+    });
+    */
     var marker = new google.maps.Marker({
       position: {lat: place[1], lng: place[2]},
       map: map,
-      title: place[0]
+      title: place[0],
+      icon: livedIcon
     });
+    attachWindow(marker, place[3]);
+    /*
+    marker.addListener('click', function() {
+      infoWindow.open(map, marker);
+    });
+    */
   }
 }
+
+function attachWindow(marker, message) {
+  console.log("in attach window");
+  var infowindow = new google.maps.InfoWindow({
+    content: message
+  });
+
+  marker.addListener('click', function() {
+    infowindow.open(marker.get('map'), marker);
+  });  
+}
+
+
+

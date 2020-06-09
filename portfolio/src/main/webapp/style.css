@@ -5,6 +5,7 @@ body {
   padding-top: 1ch;
   margin: auto;
   text-align:center;
+  align-items: center;
 }
 
 #content {
@@ -59,6 +60,10 @@ a {
 #map {
   border: thin solid black;
   height: 500px;
-  width: 500px;
-  align-content: center;
+  width: 1000px;
+  float: left;
+}
+
+#map-content {
+  float: right;
 }
