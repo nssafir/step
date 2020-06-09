@@ -80,25 +80,21 @@ function createListElement(text) {
 
 /** Places I have lived. */
 var placesLived = [
-  ['Evanston', 42.0451, -87.6877, 
-    '<h1>Evanston: 2000-2002</h1>'+'<p>I was born in outside Chicago at Northwestern Medical Center.</p>'],
-  ['Overland Park', 38.9822, -94.6708, 
-    '<h1>Overland Park: 2002-2017</h1>'+'<p>I was born in outside Chicago at Northwestern Medical Center.</p>'],
-  ['Wassenaar', 52.1429, 4.4012,
-    '<h1>Wassenaar: 2017-2018</h1>'+'<p>I was born in outside Chicago at Northwestern Medical Center.</p>'],
-  ['Athens', 33.9519, -83.3576,
-    '<h1>Athens: 2018-Present</h1>'+'<p>I was born in outside Chicago at Northwestern Medical Center.</p>'],
-  ['Oxford', 51.7520, -1.2577,
-    '<h1>Oxford: May-June 2019</h1>'+'<p>I was born in outside Chicago at Northwestern Medical Center.</p>']
+  ['Evanston', 42.0451, -87.6877, '2000-2002', 'I was born in outside Chicago at Northwestern Medical Center.'],
+  ['Overland Park', 38.9822, -94.6708, '2002-2017', 'I grew up in the Kansas City suburbs, first in Lenexa and then Overland Park. I attended Blue Valley North high school for three years.'],
+  ['Wassenaar', 52.1429, 4.4012, '2017-2018', 'I moved to the Netherlands before my senior year because my father switched jobs. I graduated from the American School of the Hague.'],
+  ['Athens', 33.9519, -83.3576, '2018-Present', 'I now live in Athens, Georgia. I am going into my junior year at UGA.'],
+  ['Oxford', 51.7520, -1.2577, 'May-June 2019', 'For the beginning of summer after my freshman year, I studied Computing Ethics at Oxford through the Foundation Fellowship\'s Maymester Program']
 ];
 
+/** Places I have visited. */
 var placesVisited = [
   // Domestic
   ['New York', 40.7128, -74.0060, 2019],
   ['Washington D.C.', 38.9072, -77.0369, 2019],
   ['San Francisco', 37.7749, -122.4194, 2014],
   ['Los Angeles', 34.0522, -118.2437, 2013],
-  ['Bonita Springs', 26.3398, -81.7787, 2020]
+  ['Bonita Springs', 26.3398, -81.7787, 2020],
   ['San Juan', 18.4655, -66.1057, 2020],
   ['Vieques', 18.1263, -65.4401, 2020],
   ['Niagra Falls', 43.0962, -79.0377, 2008],  //place holder
@@ -109,7 +105,6 @@ var placesVisited = [
   ['Lincoln', 40.8136, -96.7026, 2012],  //place holder
   ['Wichita', 37.6872, -97.3301, 2012],  // place holder
   ['Miami', 25.7617, -80.1918, 2012],  // place holder
-  // International
   ['Barcelona', 41.3851, 2.1734, 2018], 
   ['Paris', 48.8566, 2.3522, 2019], 
   ['Split', 43.5081, 16.4402, 2019],
@@ -121,7 +116,7 @@ var placesVisited = [
   ['Salzburhg', 47.8095, 13.0550, 2017],
   ['Jerusalem', 31.7683, 35.2137, 2014],
   ['Tel Aviv', 32.0853, 34.7818, 2014],
-
+  ['Ayia Napa', 34.9923, 34.0140, 2018]
 ]
 
 /** Creates a map and adds it to the page. */
@@ -132,47 +127,50 @@ function createMap() {
     document.getElementById('map'),
     {center: {lat: 37.601187, lng: -40.705303}, zoom: 3});
   
-  // adds markers to the map
+  // adds lived markers to the map
   var livedIcon = {
     url: "/images/livedPin.svg",
+    scaledSize: new google.maps.Size(30, 48),
+    origin: new google.maps.Point(0, 0),
+    anchor: new google.maps.Point(15, 48)};
+
+  for (var i = 0; i < placesLived.length; i++) {
+    var place = placesLived[i];
+    var marker = new google.maps.Marker({
+      position: {lat: place[1], lng: place[2]},
+      map: map,
+      title: (place[0] + ': lived from ' + place[3]),
+      icon: livedIcon
+    });
+    attachWindow(marker, place[4], place[0], place[3]);
+  }
+
+  // add visited markers to the map
+  var visitedIcon = {
+    url: "/images/visitedPin.svg",
     scaledSize: new google.maps.Size(20, 32),
     origin: new google.maps.Point(0, 0),
     anchor: new google.maps.Point(10, 32)};
 
-  
-
-  for (var i = 0; i < placesLived.length; i++) {
-    var place = placesLived[i];
-    /*
-    var infoWindow = new google.maps.InfoWindow({
-      content: place[3]
-    });
-    */
+  for (var i = 0; i < placesVisited.length; i++) {
+    var place = placesVisited[i];
     var marker = new google.maps.Marker({
       position: {lat: place[1], lng: place[2]},
       map: map,
-      title: place[0],
-      icon: livedIcon
+      title: (place[0] + ': visited in ' + place[3]),
+      icon: visitedIcon
     });
-    attachWindow(marker, place[3]);
-    /*
-    marker.addListener('click', function() {
-      infoWindow.open(map, marker);
-    });
-    */
   }
 }
 
-function attachWindow(marker, message) {
-  console.log("in attach window");
+/** Formats and attaches an information window to a marker. */
+function attachWindow(marker, message, header, years) {
+  display = '<h1>' + header + ': ' + years + '</h1>'
+  display += '<p>' + message + '</p>'
   var infowindow = new google.maps.InfoWindow({
-    content: message
+    content: display
   });
-
   marker.addListener('click', function() {
     infowindow.open(marker.get('map'), marker);
   });  
 }
-
-
-

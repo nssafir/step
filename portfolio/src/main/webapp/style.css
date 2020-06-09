@@ -67,3 +67,9 @@ a {
 #map-content {
   float: right;
 }
+
+.map-grid {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 50px;
+}
