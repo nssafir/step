@@ -28,17 +28,26 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/chart")
 public class ChartServlet extends HttpServlet {
 
+  /*
+  private Map<String, Integer> ageData = Map.of(
+    "0-9", 0,
+    "10-19", 0,
+    "20-29", 0,
+    "30-39", 0,
+    "40-49", 0,
+    "50+", 0
+  );
+  */
   private Map<String, Integer> ageData = new HashMap<>();
   
-  /*
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
     response.setContentType("application/json");
     Gson gson = new Gson();
-    String json = gson.toJson(colorVotes);
+    String json = gson.toJson(ageData);
+    System.out.println(json);
     response.getWriter().println(json);
   }
-  */
 
   @Override
   public void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -53,9 +62,11 @@ public class ChartServlet extends HttpServlet {
     String ageRange = convertToRange(age);
     
     // Update ageData with new vote.
+    //int currentVotes = ageData.get(ageRange);
+    //ageData.replace(ageRange, currentVotes + 1);
     int currentVotes = ageData.containsKey(ageRange) ? ageData.get(ageRange) : 0;
     ageData.put(ageRange, currentVotes + 1);
-    
+
     // DEBUGGING
     ageData.forEach((key, value) -> System.out.println(key + ":" + value));
 
@@ -67,19 +78,19 @@ public class ChartServlet extends HttpServlet {
     String range = "Invalid Age";
     switch (age) {
       case 0:
-        range = "0-10";
+        range = "0-9";
         break;
       case 1:
-        range = "10-20";
+        range = "10-19";
         break;
       case 2:
-        range = "20-30";
+        range = "20-29";
         break;
       case 3:
-        range = "30-40";
+        range = "30-39";
         break;
       case 4:
-        range = "40-50";
+        range = "40-49";
         break;
     }
     if (age >= 5) {
