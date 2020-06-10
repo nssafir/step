@@ -78,89 +78,96 @@ function createListElement(text) {
   return liElement;
 }
 
+class Place {
+  constructor(name, lat, lng, year, message = "") {
+    this.name = name;
+    this.lat = lat;
+    this.lng = lng;
+    this.year = year;
+    this.message = message;
+  }
+}
+
 /** Places I have lived. */
-var placesLived = [
-  ['Evanston', 42.0451, -87.6877, '2000-2002', 'I was born in outside Chicago at Northwestern Medical Center.'],
-  ['Overland Park', 38.9822, -94.6708, '2002-2017', 'I grew up in the Kansas City suburbs, first in Lenexa and then Overland Park. I attended Blue Valley North high school for three years.'],
-  ['Wassenaar', 52.1429, 4.4012, '2017-2018', 'I moved to the Netherlands before my senior year because my father switched jobs. I graduated from the American School of the Hague.'],
-  ['Athens', 33.9519, -83.3576, '2018-Present', 'I now live in Athens, Georgia. I am going into my junior year at UGA.'],
-  ['Oxford', 51.7520, -1.2577, 'May-June 2019', 'For the beginning of summer after my freshman year, I studied Computing Ethics at Oxford through the Foundation Fellowship\'s Maymester Program']
-];
+const placesLived = [
+  new Place('Evanston', 42.0451, -87.6877, '2000-2002', 'I was born in outside Chicago at Northwestern Medical Center.'),
+  new Place('Overland Park', 38.9822, -94.6708, '2002-2017', 'I grew up in the Kansas City suburbs, first in Lenexa and then Overland Park. I attended Blue Valley North high school for three years.'),
+  new Place('Wassenaar', 52.1429, 4.4012, '2017-2018', 'I moved to the Netherlands before my senior year because my father switched jobs. I graduated from the American School of the Hague.'),
+  new Place('Athens', 33.9519, -83.3576, '2018-Present', 'I now live in Athens, Georgia. I am going into my junior year at UGA.'),
+  new Place('Oxford', 51.7520, -1.2577, 'May-June 2019', 'For the beginning of summer after my freshman year, I studied Computing Ethics at Oxford through the Foundation Fellowship\'s Maymester Program')
+]
 
 /** Places I have visited. */
-var placesVisited = [
+const placesVisited = [
   // Domestic
-  ['New York', 40.7128, -74.0060, 2019],
-  ['Washington D.C.', 38.9072, -77.0369, 2019],
-  ['San Francisco', 37.7749, -122.4194, 2014],
-  ['Los Angeles', 34.0522, -118.2437, 2013],
-  ['Bonita Springs', 26.3398, -81.7787, 2020],
-  ['San Juan', 18.4655, -66.1057, 2020],
-  ['Vieques', 18.1263, -65.4401, 2020],
-  ['Niagra Falls', 43.0962, -79.0377, 2008],  //place holder
-  ['St. Louis', 38.6270, -90.1994, 2012],  // place holder
-  ['Omaha', 41.2565, -95.9345, 2012],  // place holder
-  ['Sioux City', 42.4963, -96.4049, 2012],  // place holder
-  ['Des Moines', 41.5868, -93.6250, 2012],  // place holder
-  ['Lincoln', 40.8136, -96.7026, 2012],  //place holder
-  ['Wichita', 37.6872, -97.3301, 2012],  // place holder
-  ['Miami', 25.7617, -80.1918, 2012],  // place holder
-  ['Barcelona', 41.3851, 2.1734, 2018], 
-  ['Paris', 48.8566, 2.3522, 2019], 
-  ['Split', 43.5081, 16.4402, 2019],
-  ['London', 51.5074, 0.1278, 2019],
-  ['Venice', 45.4408, 12.3155, 2017],
-  ['Prague', 50.0755, 14.4378, 2017],
-  ['Cesky Krumlov', 48.8127, 14.3175, 2017],
-  ['Vienna', 48.2082, 16.3738, 2017],
-  ['Salzburhg', 47.8095, 13.0550, 2017],
-  ['Jerusalem', 31.7683, 35.2137, 2014],
-  ['Tel Aviv', 32.0853, 34.7818, 2014],
-  ['Ayia Napa', 34.9923, 34.0140, 2018]
+  new Place('New York', 40.7128, -74.0060, 2019),
+  new Place('Washington D.C.', 38.9072, -77.0369, 2019),
+  new Place('San Francisco', 37.7749, -122.4194, 2014),
+  new Place('Los Angeles', 34.0522, -118.2437, 2013),
+  new Place('Bonita Springs', 26.3398, -81.7787, 2020),
+  new Place('San Juan', 18.4655, -66.1057, 2020),
+  new Place('Vieques', 18.1263, -65.4401, 2020),
+  new Place('Niagra Falls', 43.0962, -79.0377, 2008),
+  new Place('St. Louis', 38.6270, -90.1994, 2012),
+  new Place('Omaha', 41.2565, -95.9345, 2012),
+  new Place('Sioux City', 42.4963, -96.4049, 2012),
+  new Place('Des Moines', 41.5868, -93.6250, 2012),
+  new Place('Lincoln', 40.8136, -96.7026, 2012),
+  new Place('Wichita', 37.6872, -97.3301, 2012),
+  new Place('Miami', 25.7617, -80.1918, 2012),
+  // International
+  new Place('Barcelona', 41.3851, 2.1734, 2018),
+  new Place('Paris', 48.8566, 2.3522, 2019),
+  new Place('Split', 43.5081, 16.4402, 2019),
+  new Place('London', 51.5074, 0.1278, 2019),
+  new Place('Venice', 45.4408, 12.3155, 2017),
+  new Place('Prague', 50.0755, 14.4378, 2017),
+  new Place('Cesky Krumlov', 48.8127, 14.3175, 2017),
+  new Place('Vienna', 48.2082, 16.3738, 2017),
+  new Place('Salzburg', 47.8095, 13.0550, 2017),
+  new Place('Jerusalem', 31.7683, 35.2137, 2014),
+  new Place('Tel Aviv', 32.0853, 34.7818, 2014),
+  new Place('Ayia Napa', 34.9923, 34.0140, 2018)
 ]
 
 /** Creates a map and adds it to the page. */
 function createMap() {
-
-  // creates map and adds it to page
+  // Creates map and adds it to page.
   const map = new google.maps.Map(
     document.getElementById('map'),
     {center: {lat: 37.601187, lng: -40.705303}, zoom: 3});
   
-  // adds lived markers to the map
+  // Adds lived markers to the map.
   var livedIcon = {
     url: "/images/livedPin.svg",
     scaledSize: new google.maps.Size(30, 48),
     origin: new google.maps.Point(0, 0),
     anchor: new google.maps.Point(15, 48)};
+  addMarkers(map, placesLived, livedIcon, true);
 
-  for (var i = 0; i < placesLived.length; i++) {
-    var place = placesLived[i];
-    var marker = new google.maps.Marker({
-      position: {lat: place[1], lng: place[2]},
-      map: map,
-      title: (place[0] + ': lived from ' + place[3]),
-      icon: livedIcon
-    });
-    attachWindow(marker, place[4], place[0], place[3]);
-  }
-
-  // add visited markers to the map
+  // Add visited markers to the map.
   var visitedIcon = {
     url: "/images/visitedPin.svg",
     scaledSize: new google.maps.Size(20, 32),
     origin: new google.maps.Point(0, 0),
     anchor: new google.maps.Point(10, 32)};
+  addMarkers(map, placesVisited, visitedIcon, false);
+}
 
-  for (var i = 0; i < placesVisited.length; i++) {
-    var place = placesVisited[i];
+/** Adds markers to the map. */
+function addMarkers(map, placeList, image, addWindow) {
+  for (var i = 0; i < placeList.length; i++) {
+    var place = placeList[i];
     var marker = new google.maps.Marker({
-      position: {lat: place[1], lng: place[2]},
+      position: {lat: place.lat, lng: place.lng},
       map: map,
-      title: (place[0] + ': visited in ' + place[3]),
-      icon: visitedIcon
+      title: (place.name + ': lived from ' + place.year),
+      icon: image
     });
-  }
+    if (addWindow) {
+      attachWindow(marker, place.message, place.name, place.year);    
+    }   
+  }  
 }
 
 /** Formats and attaches an information window to a marker. */
