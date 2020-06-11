@@ -76,7 +76,7 @@ public class ChartServlet extends HttpServlet {
       storeData(ageRange);
     }
     else {
-      System.err.println("Improper value entered");
+      System.err.println("Improper value entered: " + ageString);
     }
     response.sendRedirect("/chart.html");
   }
@@ -91,28 +91,17 @@ public class ChartServlet extends HttpServlet {
   
   /** Converts age number to range string.*/
   private String convertToRange(int age) {
-    age = age / 10;
     String range = "Invalid Age";
-    switch (age) {
-      case 0:
-        range = "0-9";
-        break;
-      case 1:
-        range = "10-19";
-        break;
-      case 2:
-        range = "20-29";
-        break;
-      case 3:
-        range = "30-39";
-        break;
-      case 4:
-        range = "40-49";
-        break;
+    String[] ageRanges = {"0-9", "10-19", "20-29", "30-39", "40-49", "50+"};
+    if (age >= 0) {
+      age = age / 10;
+      if (age >= 0 && age <= 5) {
+        range = ageRanges[age];
+      }
+      else if (age > 5) {
+        range = ageRanges[5];
+      }
     }
-    if (age >= 5) {
-      range = "50+";
-    }
-    return range; 
+    return range;
   }
 }
