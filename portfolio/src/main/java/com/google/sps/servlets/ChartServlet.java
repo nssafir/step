@@ -23,25 +23,34 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import com.google.appengine.api.datastore.DatastoreService;
+import com.google.appengine.api.datastore.DatastoreServiceFactory;
+import com.google.appengine.api.datastore.Entity;
+import com.google.appengine.api.datastore.PreparedQuery;
+import com.google.appengine.api.datastore.Query;
+import com.google.appengine.api.datastore.Query.SortDirection;
 
 
 @WebServlet("/chart")
 public class ChartServlet extends HttpServlet {
 
-  /*
-  private Map<String, Integer> ageData = Map.of(
-    "0-9", 0,
-    "10-19", 0,
-    "20-29", 0,
-    "30-39", 0,
-    "40-49", 0,
-    "50+", 0
-  );
-  */
-  private Map<String, Integer> ageData = new HashMap<>();
+  //private Map<String, Integer> ageData = new HashMap<>();
   
   @Override
   public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    Query query = new Query("Task");
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    PreparedQuery results = datastore.prepare(query);
+
+    Map<String, Integer> ageData = new HashMap<>();
+    String ageRange;
+    int currentVotes;
+    for (Entity entity : results.asIterable()) {
+      ageRange = (String) entity.getProperty("range");
+      currentVotes = ageData.containsKey(ageRange) ? ageData.get(ageRange) : 0;
+      ageData.put(ageRange, currentVotes + 1);
+    }
+
     response.setContentType("application/json");
     Gson gson = new Gson();
     String json = gson.toJson(ageData);
@@ -60,17 +69,26 @@ public class ChartServlet extends HttpServlet {
       System.err.println("Could not convert to int: " + ageString);
     }
     String ageRange = convertToRange(age);
+    storeData(ageRange);
+
     
     // Update ageData with new vote.
-    //int currentVotes = ageData.get(ageRange);
-    //ageData.replace(ageRange, currentVotes + 1);
+    /*
     int currentVotes = ageData.containsKey(ageRange) ? ageData.get(ageRange) : 0;
     ageData.put(ageRange, currentVotes + 1);
+    */
 
     // DEBUGGING
-    ageData.forEach((key, value) -> System.out.println(key + ":" + value));
+    //ageData.forEach((key, value) -> System.out.println(key + ":" + value));
 
     response.sendRedirect("/chart.html");
+  }
+
+  private void storeData(String range) {
+    Entity taskEntity = new Entity("Task");
+    taskEntity.setProperty("range", range);
+    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
+    datastore.put(taskEntity);
   }
   
   private String convertToRange(int age) {
