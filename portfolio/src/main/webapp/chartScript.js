@@ -1,5 +1,3 @@
-
-
 google.charts.load('current', {'packages':['corechart']});
 google.charts.setOnLoadCallback(drawChart);
 
@@ -13,9 +11,7 @@ function contains(list, s) {
   return false;
 }
 
-
 /** Fetches color data and uses it to create a chart. */
-
 function drawChart() {
   const ageRanges = ['0-9','10-19','20-29','30-39','40-49','50+'];
   fetch('/chart').then(response => response.json())
@@ -26,16 +22,11 @@ function drawChart() {
 
     for (var i = 0; i < ageRanges.length; i++) {
       range = ageRanges[i];
-      console.log(range);
-      console.log(Object.keys(ageData))
       if (contains(Object.keys(ageData), range)){
-        console.log("in if");
-        //console.log(ageData[range]);
         data.addRow([range, ageData[range]]);
       }
       else {
-        console.log("in else");
-        data.addRow([range, 0]); //should be zero, change later
+        data.addRow([range, 0]);
       }
     }
 
