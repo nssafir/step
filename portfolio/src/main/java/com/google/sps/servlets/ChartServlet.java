@@ -95,10 +95,10 @@ public class ChartServlet extends HttpServlet {
     String[] ageRanges = {"0-9", "10-19", "20-29", "30-39", "40-49", "50+"};
     if (age >= 0) {
       age = age / 10;
-      if (age >= 0 && age <= 5) {
+      if (age <= 5) {
         range = ageRanges[age];
       }
-      else if (age > 5) {
+      else {
         range = ageRanges[5];
       }
     }
