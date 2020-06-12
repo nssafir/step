@@ -19,5 +19,13 @@ import java.util.Collection;
 public final class FindMeetingQuery {
   public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
     throw new UnsupportedOperationException("TODO: Implement this method.");
+
+    // for each attendee, create un-avaialbility list
+    // attendee A = [11-12, 2-3]
+    // attendee B = [11-12, 1-2]
+
+    
+
+    // return first available timeslot
   }
 }
