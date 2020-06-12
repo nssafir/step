@@ -88,46 +88,80 @@ class Place {
   }
 }
 
+class PlaceBuilder{
+  constructor(name) {
+    this.name = name;
+    return this;
+  }
+  withLatitude(latitude) {
+    this.latitude = latitude;
+    return this;
+  }
+  withLongitude(longitude) {
+    this.longitude = longitude;
+    return this;
+  }
+  withYear(year) {
+    this.year = year;
+    return this;
+  }
+  withMessage(message) {
+    this.message = message;
+    return this;
+  }
+  build() {
+    return new Place(this.name, this.latitude, this.longitude, this.year, this.message);
+  }
+}
+
+
+
 /** Places I have lived. */
 const placesLived = [
-  new Place('Evanston', 42.0451, -87.6877, '2000-2002', 'I was born in outside Chicago at Northwestern Medical Center.'),
-  new Place('Overland Park', 38.9822, -94.6708, '2002-2017', 'I grew up in the Kansas City suburbs, first in Lenexa and then Overland Park. I attended Blue Valley North high school for three years.'),
-  new Place('Wassenaar', 52.1429, 4.4012, '2017-2018', 'I moved to the Netherlands before my senior year because my father switched jobs. I graduated from the American School of the Hague.'),
-  new Place('Athens', 33.9519, -83.3576, '2018-Present', 'I now live in Athens, Georgia. I am going into my junior year at UGA.'),
-  new Place('Oxford', 51.7520, -1.2577, 'May-June 2019', 'For the beginning of summer after my freshman year, I studied Computing Ethics at Oxford through the Foundation Fellowship\'s Maymester Program')
+  new PlaceBuilder("Evanston").withLatitude(42.0451).withLongitude(-86.6877).withYear('2000-2002')
+    .withMessage('I was born in outside Chicago at Northwestern Medical Center.').build(),
+  new PlaceBuilder("Overland Park").withLatitude(38.9822).withLongitude(-94.6708).withYear('2002-2017')
+    .withMessage('I grew up in the Kansas City suburbs, first in Lenexa and then Overland Park. I attended Blue Valley North high school for three years.').build(),
+  new PlaceBuilder("Wassenaar").withLatitude(52.1429).withLongitude(4.4012).withYear('2017-2018')
+    .withMessage('I moved to the Netherlands before my senior year because my father switched jobs. I graduated from the American School of the Hague.').build(),
+  new PlaceBuilder("Athens").withLatitude(33.9519).withLongitude(-83.3576).withYear('2018-Present')
+    .withMessage('I now live in Athens, Georgia. I am going into my junior year at UGA.').build(),
+  new PlaceBuilder("Oxford").withLatitude(51.7520).withLongitude(-1.2577).withYear('May-June 2019')
+    .withMessage('For the beginning of summer after my freshman year, I studied Computing Ethics at Oxford through the Foundation Fellowship\'s Maymester Program').build()
 ]
 
 /** Places I have visited. */
 const placesVisited = [
   // Domestic
-  new Place('New York', 40.7128, -74.0060, 2019),
-  new Place('Washington D.C.', 38.9072, -77.0369, 2019),
-  new Place('San Francisco', 37.7749, -122.4194, 2014),
-  new Place('Los Angeles', 34.0522, -118.2437, 2013),
-  new Place('Bonita Springs', 26.3398, -81.7787, 2020),
-  new Place('San Juan', 18.4655, -66.1057, 2020),
-  new Place('Vieques', 18.1263, -65.4401, 2020),
-  new Place('Niagra Falls', 43.0962, -79.0377, 2008),
-  new Place('St. Louis', 38.6270, -90.1994, 2012),
-  new Place('Omaha', 41.2565, -95.9345, 2012),
-  new Place('Sioux City', 42.4963, -96.4049, 2012),
-  new Place('Des Moines', 41.5868, -93.6250, 2012),
-  new Place('Lincoln', 40.8136, -96.7026, 2012),
-  new Place('Wichita', 37.6872, -97.3301, 2012),
-  new Place('Miami', 25.7617, -80.1918, 2012),
+  new PlaceBuilder('New York').withLatitude(40.7128).withLongitude(-74.0060).withYear(2019),
+  new PlaceBuilder('Washington D.C.').withLatitude(38.9072).withLongitude(-77.0369).withYear(2019),
+  new PlaceBuilder('San Francisco').withLatitude(37.7749).withLongitude(-122.4194).withYear(2014),
+  new PlaceBuilder('Los Angeles').withLatitude(34.0522).withLongitude(-118.2437).withYear(2013),
+  new PlaceBuilder('Bonita Springs').withLatitude(26.3398).withLongitude(-81.7787).withYear(2020),
+  new PlaceBuilder('San Juan').withLatitude(18.4655).withLongitude(-66.1057).withYear(2020),
+  new PlaceBuilder('Vieques').withLatitude(18.1263).withLongitude(-65.4401).withYear(2020),
+  new PlaceBuilder('Niagra Falls').withLatitude(43.0962).withLongitude(-79.0377).withYear(2008),
+  new PlaceBuilder('St. Louis').withLatitude(38.6270).withLongitude(-90.1994).withYear(2012),
+  new PlaceBuilder('Omaha').withLatitude(41.2565).withLongitude(-95.9345).withYear(2012),
+  new PlaceBuilder('Sioux City').withLatitude(42.4963).withLongitude(-96.4049).withYear(2012),
+  new PlaceBuilder('Des Moines').withLatitude(41.5868).withLongitude(-93.6250).withYear(2012),
+  new PlaceBuilder('Lincoln').withLatitude(40.8136).withLongitude(-96.7026).withYear(2012),
+  new PlaceBuilder('Wichita').withLatitude(37.6872).withLongitude(-97.3301).withYear(2012),
+  new PlaceBuilder('Miami').withLatitude(25.7617).withLongitude(-80.1918).withYear(2012),
+  new PlaceBuilder('Minneapolis').withLatitude(44.9778).withLongitude(93.2650).withYear(2012),
   // International
-  new Place('Barcelona', 41.3851, 2.1734, 2018),
-  new Place('Paris', 48.8566, 2.3522, 2019),
-  new Place('Split', 43.5081, 16.4402, 2019),
-  new Place('London', 51.5074, 0.1278, 2019),
-  new Place('Venice', 45.4408, 12.3155, 2017),
-  new Place('Prague', 50.0755, 14.4378, 2017),
-  new Place('Cesky Krumlov', 48.8127, 14.3175, 2017),
-  new Place('Vienna', 48.2082, 16.3738, 2017),
-  new Place('Salzburg', 47.8095, 13.0550, 2017),
-  new Place('Jerusalem', 31.7683, 35.2137, 2014),
-  new Place('Tel Aviv', 32.0853, 34.7818, 2014),
-  new Place('Ayia Napa', 34.9923, 34.0140, 2018)
+  new PlaceBuilder('Barcelona').withLatitude(41.3851).withLongitude(2.1734).withYear(2018),
+  new PlaceBuilder('Paris').withLatitude(48.8566).withLongitude(2.3522).withYear(2019),
+  new PlaceBuilder('Split').withLatitude(43.5081).withLongitude(16.4402).withYear(2019),
+  new PlaceBuilder('London').withLatitude(51.5074).withLongitude(0.1278).withYear(2019),
+  new PlaceBuilder('Venice').withLatitude(45.4408).withLongitude(12.3155).withYear(2017),
+  new PlaceBuilder('Prague').withLatitude(50.0755).withLongitude(14.4378).withYear(2017),
+  new PlaceBuilder('Cesky Krumlov').withLatitude(48.8127).withLongitude(14.3175).withYear(2017),
+  new PlaceBuilder('Vienna').withLatitude(48.2082).withLongitude(16.3738).withYear(2017),
+  new PlaceBuilder('Salzburg').withLatitude(47.8095).withLongitude(13.0550).withYear(2017),
+  new PlaceBuilder('Jerusalem').withLatitude(31.7683).withLongitude(35.2137).withYear(2014),
+  new PlaceBuilder('Tel Aviv').withLatitude(32.0853).withLongitude(34.7818).withYear(2014),
+  new PlaceBuilder('Ayia Napa').withLatitude(34.9923).withLongitude(34.0140).withYear(2018)
 ]
 
 /** Creates a map and adds it to the page. */
@@ -156,12 +190,16 @@ function createMap() {
 
 /** Adds markers to the map. */
 function addMarkers(map, placeList, image, addWindow) {
+  let titleString = ': visited in ';
+  if (addWindow) {
+    titleString = ': lived from ';
+  }
   for (var i = 0; i < placeList.length; i++) {
     let place = placeList[i];
     let marker = new google.maps.Marker({
       position: {lat: place.latitude, lng: place.longitude},
       map: map,
-      title: (place.name + ': lived from ' + place.year),
+      title: (place.name + titleString + place.year),
       icon: image
     });
     if (addWindow) {
