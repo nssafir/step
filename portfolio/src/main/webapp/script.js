@@ -79,10 +79,10 @@ function createListElement(text) {
 }
 
 class Place {
-  constructor(name, lat, lng, year, message = "") {
+  constructor(name, latitude, longitude, year, message = "") {
     this.name = name;
-    this.lat = lat;
-    this.lng = lng;
+    this.latitude = latitude;
+    this.longitude = longitude;
     this.year = year;
     this.message = message;
   }
@@ -138,7 +138,7 @@ function createMap() {
     {center: {lat: 37.601187, lng: -40.705303}, zoom: 3});
   
   // Adds lived markers to the map.
-  var livedIcon = {
+  let livedIcon = {
     url: "/images/livedPin.svg",
     scaledSize: new google.maps.Size(30, 48),
     origin: new google.maps.Point(0, 0),
@@ -146,7 +146,7 @@ function createMap() {
   addMarkers(map, placesLived, livedIcon, true);
 
   // Add visited markers to the map.
-  var visitedIcon = {
+  let visitedIcon = {
     url: "/images/visitedPin.svg",
     scaledSize: new google.maps.Size(20, 32),
     origin: new google.maps.Point(0, 0),
@@ -157,9 +157,9 @@ function createMap() {
 /** Adds markers to the map. */
 function addMarkers(map, placeList, image, addWindow) {
   for (var i = 0; i < placeList.length; i++) {
-    var place = placeList[i];
-    var marker = new google.maps.Marker({
-      position: {lat: place.lat, lng: place.lng},
+    let place = placeList[i];
+    let marker = new google.maps.Marker({
+      position: {lat: place.latitude, lng: place.longitude},
       map: map,
       title: (place.name + ': lived from ' + place.year),
       icon: image
@@ -174,7 +174,7 @@ function addMarkers(map, placeList, image, addWindow) {
 function attachWindow(marker, message, header, years) {
   display = '<h1>' + header + ': ' + years + '</h1>'
   display += '<p>' + message + '</p>'
-  var infowindow = new google.maps.InfoWindow({
+  let infowindow = new google.maps.InfoWindow({
     content: display
   });
   marker.addListener('click', function() {
