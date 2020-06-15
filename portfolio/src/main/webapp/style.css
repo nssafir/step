@@ -55,3 +55,14 @@ a {
 #commentList {
     list-style-type: none;
 }
+
+#chart-container {
+  height: 500px;
+  width: 600px;
+}
+
+.map-grid {
+  display: grid;
+  grid-template-columns: auto auto;
+  grid-gap: 50px;
+}
