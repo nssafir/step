@@ -37,14 +37,18 @@ public final class FindMeetingQuery {
     
     // Merge overlapping TimeRange's in eventAttededTimes.
     Stack<TimeRange> stack = new Stack<TimeRange>();
-    stack.push(eventsAttendedTimes.get(0)); 
+    if (eventsAttendedTimes.size() > 0) {
+      stack.push(eventsAttendedTimes.get(0)); 
+    }
     TimeRange nextTime;   
     for (int i = 1; i < eventsAttendedTimes.size(); i++) {
       nextTime = eventsAttendedTimes.get(i);
       if (stack.peek().overlaps(nextTime)) {
-        // pop from stack, use pop's start
-        int start = stack.pop().start();
-        stack.push(TimeRange.fromStartEnd(start, nextTime.end(), true)); // not sure about boolean
+        if (nextTime.end() > stack.peek().end()) {
+          // pop from stack, use pop's start
+          int start = stack.pop().start();
+          stack.push(TimeRange.fromStartEnd(start, nextTime.end(), false));
+        }
       }
       else {
         stack.push(nextTime);
@@ -52,14 +56,23 @@ public final class FindMeetingQuery {
     }
 
     // DEBUGGING
+    /*
+    System.out.println("Unavailable Times:");
     for (TimeRange time : stack) {
-      System.out.println("Start " + time.start() + " , end " + time.end());
+      System.out.println(time.toString());
     }
+    */
 
-    // Return available times
-    // return findAvailableTimes(new ArrayList(stack), request.getDuration());
+    Collection<TimeRange> availableTimes = findAvailableTimes(new ArrayList(stack), request.getDuration());
+    Collection<TimeRange> meetingTimes = new ArrayList<TimeRange>();
+    for (TimeRange time : availableTimes) {
+      if (time.duration() >= request.getDuration()){
+        meetingTimes.add(time);
+      }
+    }
+    return meetingTimes;
 
-    throw new UnsupportedOperationException("TODO: Implement this method.");
+    //throw new UnsupportedOperationException("TODO: Implement this method.");
   }
 
   /* Checks if event shares attendes with list of attendees */
@@ -75,10 +88,42 @@ public final class FindMeetingQuery {
 
   /** Returns available TimeRange's from list of unavailable times and duration */
   private Collection<TimeRange> findAvailableTimes(ArrayList<TimeRange> unavailableTimes, long duration) {
-      // Check from beginning of day to start time of first element.
+      Collection<TimeRange> returnRanges = new ArrayList<TimeRange>();
+      // Return all day if unavailableTimes is empty.
+      if (unavailableTimes.size() == 0) {
+        returnRanges.add(TimeRange.WHOLE_DAY);
+        return returnRanges;
+      }
 
-      // Check middle.
+      // Check from beginning of day to start time of first element.
+      TimeRange firstRange = unavailableTimes.get(0);
+      if (firstRange.start() != TimeRange.START_OF_DAY) {
+        returnRanges.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, firstRange.start(), false));
+      }
+
+      // Check middle of the day.
+      if (unavailableTimes.size() > 1) {
+        System.out.println("In loop");
+        TimeRange thisRange;
+        TimeRange nextRange;
+        TimeRange newTime;
+        for (int i = 0; i < unavailableTimes.size() - 1; i++) {
+          thisRange = unavailableTimes.get(i);
+          nextRange = unavailableTimes.get(i + 1);
+          newTime = TimeRange.fromStartEnd(thisRange.end(), nextRange.start(), false);
+          System.out.println(newTime.toString());
+          if (newTime.duration() > 0) {
+            returnRanges.add(newTime);
+          }
+        }
+      }
 
       // Check from end time of last element to end of day.
+      TimeRange lastRange = unavailableTimes.get(unavailableTimes.size() - 1);
+      if (lastRange.end() < TimeRange.END_OF_DAY) {
+        returnRanges.add(TimeRange.fromStartEnd(lastRange.end(), TimeRange.END_OF_DAY, true));
+      }
+
+      return returnRanges;
   }
 }
