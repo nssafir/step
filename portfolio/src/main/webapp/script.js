@@ -121,13 +121,16 @@ const placesLived = [
   new PlaceBuilder("Evanston").withLatitude(42.0451).withLongitude(-86.6877).withYear('2000-2002')
     .withMessage('I was born in outside Chicago at Northwestern Medical Center.').build(),
   new PlaceBuilder("Overland Park").withLatitude(38.9822).withLongitude(-94.6708).withYear('2002-2017')
-    .withMessage('I grew up in the Kansas City suburbs, first in Lenexa and then Overland Park. I attended Blue Valley North high school for three years.').build(),
+    .withMessage(`I grew up in the Kansas City suburbs, first in Lenexa and then Overland Park.
+    I attended Blue Valley North high school for three years.`).build(),
   new PlaceBuilder("Wassenaar").withLatitude(52.1429).withLongitude(4.4012).withYear('2017-2018')
-    .withMessage('I moved to the Netherlands before my senior year because my father switched jobs. I graduated from the American School of the Hague.').build(),
+    .withMessage(`I moved to the Netherlands before my senior year because
+    my father switched jobs. I graduated from the American School of the Hague.`).build(),
   new PlaceBuilder("Athens").withLatitude(33.9519).withLongitude(-83.3576).withYear('2018-Present')
     .withMessage('I now live in Athens, Georgia. I am going into my junior year at UGA.').build(),
   new PlaceBuilder("Oxford").withLatitude(51.7520).withLongitude(-1.2577).withYear('May-June 2019')
-    .withMessage('For the beginning of summer after my freshman year, I studied Computing Ethics at Oxford through the Foundation Fellowship\'s Maymester Program').build()
+    .withMessage(`For the beginning of summer after my freshman year, I studied Computing Ethics
+    at Oxford through the Foundation Fellowship's Maymester Program`).build()
 ]
 
 /** Places I have visited. */
