@@ -31,22 +31,25 @@ public final class FindMeetingQuery {
     }
 
     if (optionalAttendees.size() == 0) {
-      // return for normal attendees
+      return FindMeetingTimes(events, request, attendees);
     }
-    else {
-      // run with optional attendees
-      // if empty, return with normal attendees
+    Collection<String> allAttendees = merge(attendees, optionalAttendees);
+    Collection<TimeRange> meetingTimes = FindMeetingTimes(events, request, allAttendees);
+    if (meetingTimes.size() == 0) {
+      System.out.println("return for no optional attendees");
+      return FindMeetingTimes(events, request, attendees);
     }
-    // INCLUDE OPTIONAL PARAMATER FOR FindMeetingTimes()
-
+    System.out.println("returning for optional attendees");
+    return meetingTimes;
   }
 
   /* Finds Meeting Times for All People Given */
-  private Collection<TimeRange> FindMeetingTimes(Collection<Event> events, MeetingRequest request) {
+  private Collection<TimeRange> FindMeetingTimes(Collection<Event> events, MeetingRequest request, Collection<String> attendees) {
     // Create list of all events an attendee for this meeting is going to.  
     ArrayList<TimeRange> eventsAttendedTimes = new ArrayList();
     for (Event event : events) {
       if (sharesAttendee(event, attendees)) {
+        System.out.println(event.getWhen().toString());
         eventsAttendedTimes.add(event.getWhen());
       }
     }
@@ -126,5 +129,16 @@ public final class FindMeetingQuery {
         returnRanges.add(TimeRange.fromStartEnd(lastRange.end(), TimeRange.END_OF_DAY, true));
       }
       return returnRanges;
+  }
+
+  private Collection<String> merge(Collection<String> listA, Collection<String> listB) {
+    Collection<String> returnList = new ArrayList<String>();
+    for (String s : listA) {
+      returnList.add(s);
+    }
+    for (String s : listB) {
+      returnList.add(s);
+    }
+    return returnList;
   }
 }
