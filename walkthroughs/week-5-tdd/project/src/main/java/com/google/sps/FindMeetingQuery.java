@@ -36,10 +36,8 @@ public final class FindMeetingQuery {
     Collection<String> allAttendees = merge(attendees, optionalAttendees);
     Collection<TimeRange> meetingTimes = FindMeetingTimes(events, request, allAttendees);
     if (meetingTimes.size() == 0) {
-      System.out.println("return for no optional attendees");
       return FindMeetingTimes(events, request, attendees);
     }
-    System.out.println("returning for optional attendees");
     return meetingTimes;
   }
 
@@ -49,7 +47,6 @@ public final class FindMeetingQuery {
     ArrayList<TimeRange> eventsAttendedTimes = new ArrayList();
     for (Event event : events) {
       if (sharesAttendee(event, attendees)) {
-        System.out.println(event.getWhen().toString());
         eventsAttendedTimes.add(event.getWhen());
       }
     }
