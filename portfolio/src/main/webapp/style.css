@@ -5,6 +5,7 @@ body {
   padding-top: 1ch;
   margin: auto;
   text-align:center;
+  align-items: center;
 }
 
 #content {
@@ -53,6 +54,18 @@ a {
 }
 
 #commentList {
+  list-style-type: none;
+}
+
+#map {
+  border: thin solid black;
+  height: 500px;
+  width: 1000px;
+  float: left;
+}
+
+#map-content {
+  float: right;
     list-style-type: none;
 }
 
