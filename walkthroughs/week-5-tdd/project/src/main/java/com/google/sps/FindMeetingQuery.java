@@ -21,20 +21,37 @@ import java.util.Set;
 import java.util.Stack;
 
 public final class FindMeetingQuery {
-  public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {
-    
-    // Create list of all events an attendee for this meeting is going to.
+  public Collection<TimeRange> query(Collection<Event> events, MeetingRequest request) {   
+    // Make optional attendees mandatory if there are no mandatory attendees.
     Collection<String> attendees = request.getAttendees();
+    Collection<String> optionalAttendees = request.getOptionalAttendees();
+    if (attendees.size() == 0 && optionalAttendees.size() > 0) {
+      attendees = optionalAttendees;
+      optionalAttendees = new ArrayList<String>();
+    }
+
+    if (optionalAttendees.size() == 0) {
+      // return for normal attendees
+    }
+    else {
+      // run with optional attendees
+      // if empty, return with normal attendees
+    }
+    // INCLUDE OPTIONAL PARAMATER FOR FindMeetingTimes()
+
+  }
+
+  /* Finds Meeting Times for All People Given */
+  private Collection<TimeRange> FindMeetingTimes(Collection<Event> events, MeetingRequest request) {
+    // Create list of all events an attendee for this meeting is going to.  
     ArrayList<TimeRange> eventsAttendedTimes = new ArrayList();
     for (Event event : events) {
       if (sharesAttendee(event, attendees)) {
         eventsAttendedTimes.add(event.getWhen());
       }
     }
-
     // Sort eventsAtendedTimes in ascending order of event start time.
-    Collections.sort(eventsAttendedTimes, TimeRange.ORDER_BY_START);
-    
+    Collections.sort(eventsAttendedTimes, TimeRange.ORDER_BY_START);   
     // Merge overlapping TimeRange's in eventAttededTimes.
     Stack<TimeRange> stack = new Stack<TimeRange>();
     if (eventsAttendedTimes.size() > 0) {
@@ -54,15 +71,7 @@ public final class FindMeetingQuery {
         stack.push(nextTime);
       }
     }
-
-    // DEBUGGING
-    /*
-    System.out.println("Unavailable Times:");
-    for (TimeRange time : stack) {
-      System.out.println(time.toString());
-    }
-    */
-
+    // Store all available time ranges long enough to contain meeting.
     Collection<TimeRange> availableTimes = findAvailableTimes(new ArrayList(stack), request.getDuration());
     Collection<TimeRange> meetingTimes = new ArrayList<TimeRange>();
     for (TimeRange time : availableTimes) {
@@ -71,8 +80,6 @@ public final class FindMeetingQuery {
       }
     }
     return meetingTimes;
-
-    //throw new UnsupportedOperationException("TODO: Implement this method.");
   }
 
   /* Checks if event shares attendes with list of attendees */
@@ -94,16 +101,13 @@ public final class FindMeetingQuery {
         returnRanges.add(TimeRange.WHOLE_DAY);
         return returnRanges;
       }
-
       // Check from beginning of day to start time of first element.
       TimeRange firstRange = unavailableTimes.get(0);
       if (firstRange.start() != TimeRange.START_OF_DAY) {
         returnRanges.add(TimeRange.fromStartEnd(TimeRange.START_OF_DAY, firstRange.start(), false));
       }
-
       // Check middle of the day.
       if (unavailableTimes.size() > 1) {
-        System.out.println("In loop");
         TimeRange thisRange;
         TimeRange nextRange;
         TimeRange newTime;
@@ -111,19 +115,16 @@ public final class FindMeetingQuery {
           thisRange = unavailableTimes.get(i);
           nextRange = unavailableTimes.get(i + 1);
           newTime = TimeRange.fromStartEnd(thisRange.end(), nextRange.start(), false);
-          System.out.println(newTime.toString());
           if (newTime.duration() > 0) {
             returnRanges.add(newTime);
           }
         }
       }
-
       // Check from end time of last element to end of day.
       TimeRange lastRange = unavailableTimes.get(unavailableTimes.size() - 1);
       if (lastRange.end() < TimeRange.END_OF_DAY) {
         returnRanges.add(TimeRange.fromStartEnd(lastRange.end(), TimeRange.END_OF_DAY, true));
       }
-
       return returnRanges;
   }
 }
