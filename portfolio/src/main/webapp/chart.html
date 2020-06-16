@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/charts/loader.js"></script>
+    <script src="chartScript.js"></script>
+  </head>
+  <body onload="drawChart()">
+    <strong>Nathan Safir</strong>
+    <br />
+    <div class = "list">
+      <div class = "entry"><a href="index.html">Home</a></div>
+      <div class = "entry"><a href="about.html">About</a></div>
+      <div class = "entry"><a href="projects.html">Projects</a></div>
+      <div class = "entry"><a href="comments.html">Comments</a></div>
+      <div class = "entry"><a href="chart.html">Chart</a></div>
+    </div>
+    <br />
+    <h1>Chart of User Ages</h1>
+    <div class="map-grid">
+      <div class = "entry">
+        <div id="chart-container"></div>
+      </div>
+      <div class="entry">
+        <div class="body">
+          <p>This page records data about the given ages of website users
+              and dynamically renders a graph showing the distribution of 
+              ages. The graph is created with the Google Charts API.
+          </p>
+        </div>
+        <form action="/chart" method="POST">
+          <label for="age">Enter age:</label>
+          <input type="number" name="age" />
+          <button>Submit</button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
