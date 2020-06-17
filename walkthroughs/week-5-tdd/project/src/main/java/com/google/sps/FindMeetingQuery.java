@@ -32,21 +32,21 @@ public final class FindMeetingQuery {
 
     // If there are no optional attendees, return results for just mandatory attendees.
     if (optionalAttendees.size() == 0) {
-      return FindMeetingTimes(events, request, attendees);
+      return findMeetingTimes(events, request, attendees);
     }
 
     // If there are optional attendees, return results including them
     // unless those results are empty.
     Collection<String> allAttendees = merge(attendees, optionalAttendees);
-    Collection<TimeRange> meetingTimes = FindMeetingTimes(events, request, allAttendees);
+    Collection<TimeRange> meetingTimes = findMeetingTimes(events, request, allAttendees);
     if (meetingTimes.size() == 0) {
-      return FindMeetingTimes(events, request, attendees);
+      return findMeetingTimes(events, request, attendees);
     }
     return meetingTimes;
   }
 
   /* Finds meeting times for all people given. */
-  private Collection<TimeRange> FindMeetingTimes(Collection<Event> events, MeetingRequest request,
+  private Collection<TimeRange> findMeetingTimes(Collection<Event> events, MeetingRequest request,
     Collection<String> attendees) {
     // Create list of all events an attendee for this meeting is going to.  
     ArrayList<TimeRange> eventsAttendedTimes = new ArrayList();
@@ -69,7 +69,7 @@ public final class FindMeetingQuery {
     return meetingTimes;
   }
 
-  /* Checks if event shares attendes with list of attendees */
+  /* Checks if event shares attendes with list of attendees. */
   private Boolean sharesAttendee(Event event, Collection<String> attendeeList){
     Set<String> eventAttendees = event.getAttendees();
     for (String attendee : eventAttendees){
