@@ -30,9 +30,13 @@ public final class FindMeetingQuery {
       optionalAttendees = new ArrayList<String>();
     }
 
+    // If there are no optional attendees, return results for just mandatory attendees.
     if (optionalAttendees.size() == 0) {
       return FindMeetingTimes(events, request, attendees);
     }
+
+    // If there are optional attendees, return results including them
+    // unless those results are empty.
     Collection<String> allAttendees = merge(attendees, optionalAttendees);
     Collection<TimeRange> meetingTimes = FindMeetingTimes(events, request, allAttendees);
     if (meetingTimes.size() == 0) {
@@ -41,8 +45,9 @@ public final class FindMeetingQuery {
     return meetingTimes;
   }
 
-  /* Finds Meeting Times for All People Given */
-  private Collection<TimeRange> FindMeetingTimes(Collection<Event> events, MeetingRequest request, Collection<String> attendees) {
+  /* Finds meeting times for all people given. */
+  private Collection<TimeRange> FindMeetingTimes(Collection<Event> events, MeetingRequest request,
+    Collection<String> attendees) {
     // Create list of all events an attendee for this meeting is going to.  
     ArrayList<TimeRange> eventsAttendedTimes = new ArrayList();
     for (Event event : events) {
@@ -50,29 +55,11 @@ public final class FindMeetingQuery {
         eventsAttendedTimes.add(event.getWhen());
       }
     }
-    // Sort eventsAtendedTimes in ascending order of event start time.
-    Collections.sort(eventsAttendedTimes, TimeRange.ORDER_BY_START);   
-    // Merge overlapping TimeRange's in eventAttededTimes.
-    Stack<TimeRange> stack = new Stack<TimeRange>();
-    if (eventsAttendedTimes.size() > 0) {
-      stack.push(eventsAttendedTimes.get(0)); 
-    }
-    TimeRange nextTime;   
-    for (int i = 1; i < eventsAttendedTimes.size(); i++) {
-      nextTime = eventsAttendedTimes.get(i);
-      if (stack.peek().overlaps(nextTime)) {
-        if (nextTime.end() > stack.peek().end()) {
-          // pop from stack, use pop's start
-          int start = stack.pop().start();
-          stack.push(TimeRange.fromStartEnd(start, nextTime.end(), false));
-        }
-      }
-      else {
-        stack.push(nextTime);
-      }
-    }
+    Collections.sort(eventsAttendedTimes, TimeRange.ORDER_BY_START);
+    ArrayList<TimeRange> combinedTimeRanges = combineTimeRanges(eventsAttendedTimes);
+ 
     // Store all available time ranges long enough to contain meeting.
-    Collection<TimeRange> availableTimes = findAvailableTimes(new ArrayList(stack), request.getDuration());
+    Collection<TimeRange> availableTimes = findAvailableTimes(combinedTimeRanges, request.getDuration());
     Collection<TimeRange> meetingTimes = new ArrayList<TimeRange>();
     for (TimeRange time : availableTimes) {
       if (time.duration() >= request.getDuration()){
@@ -93,7 +80,7 @@ public final class FindMeetingQuery {
     return false;
   }
 
-  /** Returns available TimeRange's from list of unavailable times and duration */
+  /** Returns available TimeRange's from list of unavailable times and duration. */
   private Collection<TimeRange> findAvailableTimes(ArrayList<TimeRange> unavailableTimes, long duration) {
       Collection<TimeRange> returnRanges = new ArrayList<TimeRange>();
       // Return all day if unavailableTimes is empty.
@@ -126,6 +113,29 @@ public final class FindMeetingQuery {
         returnRanges.add(TimeRange.fromStartEnd(lastRange.end(), TimeRange.END_OF_DAY, true));
       }
       return returnRanges;
+  }
+
+  /* Merges overalapping TimeRanges in sorted ArrayList. */
+  private ArrayList<TimeRange> combineTimeRanges(ArrayList<TimeRange> eventsAttendedTimes) { 
+    
+    Stack<TimeRange> stack = new Stack<TimeRange>();
+    if (eventsAttendedTimes.size() > 0) {
+      stack.push(eventsAttendedTimes.get(0)); 
+    }
+    TimeRange nextTime;   
+    for (int i = 1; i < eventsAttendedTimes.size(); i++) {
+      nextTime = eventsAttendedTimes.get(i);
+      if (stack.peek().overlaps(nextTime)) {
+        if (nextTime.end() > stack.peek().end()) {
+          int start = stack.pop().start();
+          stack.push(TimeRange.fromStartEnd(start, nextTime.end(), false));
+        }
+      }
+      else {
+        stack.push(nextTime);
+      }
+    }
+    return new ArrayList(stack);
   }
 
   private Collection<String> merge(Collection<String> listA, Collection<String> listB) {
